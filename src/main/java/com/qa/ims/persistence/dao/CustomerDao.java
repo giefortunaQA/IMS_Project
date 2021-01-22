@@ -82,21 +82,21 @@ public class CustomerDao implements IDomainDao<Customer> {
 
     @Override
     public Customer update(Customer customer) {
-//        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-//                PreparedStatement statement = connection
-//                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE id = ?");) {
-//            statement.setString(1, customer.getFirstName());
-//            statement.setString(2, customer.getSurname());
-//            statement.setLong(3, customer.getHouseNumber());
-//            statement.setNString(4, customer.getPostCode());
-//            statement.setLong(3, customer.getCid());
-//            statement.executeUpdate();
-//            return read(customer.getCid());
-//        } catch (Exception e) {
-//            LOGGER.debug(e);
-//            LOGGER.error(e.getMessage());
-//        }
-        return null;
+        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?");) {
+            statement.setString(1, customer.getFirstName());
+            statement.setString(2, customer.getSurname());
+            statement.setLong(3, customer.getHouseNumber());
+            statement.setNString(4, customer.getPostCode());
+            statement.setLong(5, customer.getCid());
+            statement.executeUpdate();
+            return read(customer.getCid());
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+		return customer;
     }
 
     @Override
