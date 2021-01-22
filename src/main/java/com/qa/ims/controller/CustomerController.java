@@ -37,29 +37,35 @@ public class CustomerController implements ICrudController<Customer> {
         String firstName = javaUtilities.getString();
         LOGGER.info("Please enter a surname");
         String surname = javaUtilities.getString();
-        Customer customer = customerDao.create(new Customer(firstName, surname));
+        LOGGER.info("Please enter a house number");
+        Long houseNumber=javaUtilities.getLong();
+        LOGGER.info("Please enter a postcode (AAA9 9AA format) ");
+        String postCode=javaUtilities.getString();
+        Customer customer = customerDao.create(new Customer(firstName, surname,houseNumber,postCode));
         LOGGER.info("Customer created");
         return customer;
     }
 
     @Override
     public Customer update() {
-        LOGGER.info("Please enter the id of the customer you would like to update");
-        Long id = javaUtilities.getLong();
-        LOGGER.info("Please enter a first name");
-        String firstName = javaUtilities.getString();
-        LOGGER.info("Please enter a surname");
-        String surname = javaUtilities.getString();
-        Customer customer = customerDao.update(new Customer(id, firstName, surname));
-        LOGGER.info("Customer Updated");
-        return customer;
+//        LOGGER.info("Please enter the id of the customer you would like to update");
+//        Long id = javaUtilities.getLong();
+//        LOGGER.info("Please enter a first name");
+//        String firstName = javaUtilities.getString();
+//        LOGGER.info("Please enter a surname");
+//        String surname = javaUtilities.getString();
+//        Customer customer = customerDao.update(new Customer(id, firstName, surname));
+//        LOGGER.info("Customer Updated");
+//        return customer;
+    	return null;
     }
 
     @Override
     public int delete() {
-        LOGGER.info("Please enter the id of the customer you would like to delete");
-        Long id = javaUtilities.getLong();
-        return customerDao.delete(id);
+//        LOGGER.info("Please enter the id of the customer you would like to delete");
+//        Long id = javaUtilities.getLong();
+//        return customerDao.delete(id);
+        return 0;
     }
 
 }
