@@ -15,8 +15,8 @@ public class Customer {
 		this.postCode=postCode;
 	}
 
-	public Customer(Long id, String firstName, String surname,Long houseNumber,String postCode) {
-		this.setCid(id);
+	public Customer(Long cid, String firstName, String surname,Long houseNumber,String postCode) {
+		this.setCid(cid);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
 		this.houseNumber=houseNumber;
@@ -27,8 +27,8 @@ public class Customer {
 		return cid;
 	}
 
-	public void setCid(Long id) {
-		this.cid = id;
+	public void setCid(Long cid) {
+		this.cid = cid;
 	}
 
 	public Long getHouseNumber() {
