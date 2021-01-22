@@ -20,3 +20,11 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 	`price` DEC(5,2) NOT NULL,
 	PRIMARY KEY (`iid`)
 	);
+
+CREATE TABLE IF NOT EXISTS `ims`.`orders` (
+	`oid` INT(10) NOT NULL AUTO_INCREMENT,
+	`fk_cid` INT(10) NOT NULL,
+	`date_placed` DATE NOT NULL,
+	PRIMARY KEY (`oid`),
+	FOREIGN KEY (`fk_cid`) references customers(`cid`)
+	);
