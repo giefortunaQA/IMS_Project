@@ -66,10 +66,9 @@ public class CustomerController implements ICrudController<Customer> {
 
     @Override
     public int delete() {
-//        LOGGER.info("Please enter the id of the customer you would like to delete");
-//        Long id = javaUtilities.getLong();
-//        return customerDao.delete(id);
-        return 0;
+        LOGGER.info("Please enter the id of the customer you would like to delete");
+        Long id = javaUtilities.getLong();
+        return customerDao.delete(id);
     }
 
 }

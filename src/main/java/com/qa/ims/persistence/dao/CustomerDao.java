@@ -100,13 +100,13 @@ public class CustomerDao implements IDomainDao<Customer> {
 
     @Override
     public int delete(long cid) {
-//        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-//                Statement statement = connection.createStatement();) {
-//            return statement.executeUpdate("delete from customers where cid = " + cid);
-//        } catch (Exception e) {
-//            LOGGER.debug(e);
-//            LOGGER.error(e.getMessage());
-//        }
+        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                Statement statement = connection.createStatement();) {
+            return statement.executeUpdate("delete from customers where cid = " + cid);
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
         return 0;
     }
 
