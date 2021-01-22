@@ -83,7 +83,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer update(Customer customer) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?");) {
+                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?;")) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
             statement.setLong(3, customer.getHouseNumber());
@@ -95,7 +95,7 @@ public class CustomerDao implements IDomainDao<Customer> {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
-		return customer;
+		return null;
     }
 
     @Override
