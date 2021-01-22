@@ -85,9 +85,9 @@ public class CustomerDao implements IDomainDao<Customer> {
                         .prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
-            statement.setLong(3, customer.getId());
+            statement.setLong(3, customer.getCid());
             statement.executeUpdate();
-            return read(customer.getId());
+            return read(customer.getCid());
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());

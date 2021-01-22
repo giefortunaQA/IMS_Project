@@ -2,27 +2,49 @@ package com.qa.ims.persistence.domain;
 
 public class Customer {
 
-	private Long id;
+	private Long cid ;
 	private String firstName;
 	private String surname;
+	private Long houseNumber;
+	private String postCode;
 
-	public Customer(String firstName, String surname) {
+	public Customer(String firstName, String surname,Long houseNumber,String postCode) {
 		this.setFirstName(firstName);
 		this.setSurname(surname);
+		this.houseNumber=houseNumber;
+		this.postCode=postCode;
 	}
 
-	public Customer(Long id, String firstName, String surname) {
-		this.setId(id);
+	public Customer(Long id, String firstName, String surname,Long houseNumber,String postCode) {
+		this.setCid(id);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
+		this.houseNumber=houseNumber;
+		this.postCode=postCode;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getCid() {
+		return cid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCid(Long id) {
+		this.cid = id;
+	}
+
+	public Long getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(Long houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+
+	public String getPostCode() {
+		return postCode;
+	}
+
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
 
 	public String getFirstName() {
@@ -41,9 +63,11 @@ public class Customer {
 		this.surname = surname;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "Customer [cid=" + cid + ", firstName=" + firstName + ", surname=" + surname + ", houseNumber="
+				+ houseNumber + ", postCode=" + postCode + "]";
 	}
 
 	@Override
@@ -51,7 +75,7 @@ public class Customer {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((cid == null) ? 0 : cid.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
@@ -70,10 +94,10 @@ public class Customer {
 				return false;
 		} else if (!getFirstName().equals(other.getFirstName()))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (cid == null) {
+			if (other.cid != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!cid.equals(other.cid))
 			return false;
 		if (surname == null) {
 			if (other.surname != null)
