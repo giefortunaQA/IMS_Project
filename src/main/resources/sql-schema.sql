@@ -28,3 +28,10 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	PRIMARY KEY (`oid`),
 	FOREIGN KEY (`fk_cid`) references customers(`cid`)
 	);
+	
+CREATE TABLE IF NOT EXISTS `ims`.`orders_items` (
+	`fk_oid` INT(10) NOT NULL,
+	`fk_iid` INT(10) NOT NULL,
+	FOREIGN KEY (`fk_oid`) references orders(`oid`),
+	FOREIGN KEY (`fk_iid`) references items(`iid`)
+	);
