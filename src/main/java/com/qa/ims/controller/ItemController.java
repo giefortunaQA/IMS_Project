@@ -45,7 +45,17 @@ public class ItemController implements ICrudController<Item> {
     
     @Override
     public Item update() {
-       return null;
+        LOGGER.info("Please enter the iid of the item you would like to update");
+        Long iid = javaUtilities.getLong();
+        LOGGER.info("Please enter an item name");
+        String name = javaUtilities.getString();
+        LOGGER.info("Please enter a quantity of this item");
+        long qty = javaUtilities.getLong();
+        LOGGER.info("Please enter new price of this item");
+        double price=javaUtilities.getDouble();
+        Item item = itemDao.update(new Item(iid, name, qty,price));
+        LOGGER.info("Item record updated.");
+        return item;
     }
 
     @Override

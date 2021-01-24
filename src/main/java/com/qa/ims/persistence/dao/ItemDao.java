@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DatabaseUtilities;
 
@@ -66,12 +64,38 @@ public class ItemDao implements IDomainDao<Item>{
         return new ArrayList<>();
     }
     
-	@Override
-	public Item update(Item t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Item read(Long iid) {
+    	try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE iid = ?");) {
+            statement.setLong(1, iid);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return modelFromResultSet(resultSet);
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+        return null;
+    }
 
+    @Override
+    public Item update(Item item) {
+        try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("UPDATE items SET name=?, qty=?, price=? WHERE iid = ?;")) {
+            statement.setString(1, item.getName());
+            statement.setLong(2, item.getQty());
+            statement.setDouble(3, item.getPrice());
+            statement.setLong(4, item.getIid());
+            statement.executeUpdate();
+            return read(item.getIid());
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+		return null;
+    }
+    
 	@Override
 	public int delete(long id) {
 		// TODO Auto-generated method stub
