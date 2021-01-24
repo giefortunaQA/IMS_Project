@@ -5,10 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IDomainDao<T> {
-
-	List<T> readAll();
-
 	T create(T t);
+	
+	List<T> readAll();
 
 	T update(T t);
 
