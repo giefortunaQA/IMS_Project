@@ -1,4 +1,5 @@
 package com.qa.ims.controller;
+
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -35,8 +36,13 @@ public class ItemController implements ICrudController<Item> {
     
     @Override
     public List<Item> readAll() {
-        return null;
+        List<Item> items = itemDao.readAll();
+        for (Item item : items) {
+            LOGGER.info(item);
+        }
+        return items;
     }
+    
     @Override
     public Item update() {
        return null;
