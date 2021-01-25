@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDao;
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.JavaUtilities;
 
@@ -40,7 +39,7 @@ public class OrderController implements ICrudController<Order>{
 //            	}
 //        }
         
-        Order order = orderDao.create(new Order(new Customer(fkCid,null,null,null,null),null,0.0));
+        Order order = orderDao.create(new Order(fkCid,null));
 //        for (Long iid: itemList) {
 //        	orderDao.addToOrder(order.getOid(), iid);
 //        }
@@ -50,8 +49,11 @@ public class OrderController implements ICrudController<Order>{
 
 	@Override
 	public List<Order> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		 List<Order> orders = orderDao.readAll();
+	        for (Order order: orders) {
+	            LOGGER.info(order);
+	        }
+	        return orders;
 	}
 
 	@Override

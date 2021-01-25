@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
 
@@ -21,7 +23,7 @@ public class OrderDao implements IDomainDao<Order>{
 	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("INSERT INTO orders (fk_cid) VALUES (?);")){
-            statement.setLong(1, order.getCustomer().getCid());
+            statement.setLong(1, order.getFkCid());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -60,8 +62,19 @@ public class OrderDao implements IDomainDao<Order>{
 
 	@Override
 	public List<Order> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM orders;")) {
+            List<Order> orders = new ArrayList<>();
+            while (resultSet.next()) {
+                orders.add(modelFromResultSet(resultSet));
+            }
+            return orders;
+        } catch (SQLException e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+        return new ArrayList<>();
 	}
 
 	@Override
@@ -78,8 +91,10 @@ public class OrderDao implements IDomainDao<Order>{
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long oid = resultSet.getLong("oid");
+		Long fkCid= resultSet.getLong("fk_cid");
+		Double orderValue = resultSet.getDouble("order_value");
+		return new Order(oid,fkCid,orderValue);
 	}
 
 
