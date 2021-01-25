@@ -1,45 +1,73 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.List;
+
 public class Order {
 	private Long oid;
-	private Long fkCid;
+	private Customer customer;
+	private List<Item> itemList;
+	private Double orderValue;
 	
-	public Order(Long oid, Long fkCid) {
-		this.oid=oid;
-		this.fkCid=fkCid;
+	
+	public Order(Long oid, Customer customer, List<Item> itemList, Double orderValue) {
+		super();
+		this.oid = oid;
+		this.customer = customer;
+		this.itemList = itemList;
+		this.orderValue = orderValue;
+		
 	}
+
 	
-	public Order(Long fkCid) {
-		this.fkCid=fkCid;
+	public Order(Customer customer, List<Item> itemList, Double orderValue) {
+		super();
+		this.customer = customer;
+		this.itemList = itemList;
+		this.orderValue = orderValue;
 	}
-	
+
+
 	public Long getOid() {
 		return oid;
 	}
 	public void setOid(Long oid) {
 		this.oid = oid;
 	}
-	public Long getFkCid() {
-		return fkCid;
+	public Customer getCustomer() {
+		return customer;
 	}
-	public void setFkCid(Long fkCid) {
-		this.fkCid = fkCid;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public List<Item> getItemList() {
+		return itemList;
+	}
+	public void setItemList(List<Item> itemList) {
+		this.itemList = itemList;
+	}
+	public Double getOrderValue() {
+		return orderValue;
+	}
+	public void setOrderValue(Double orderValue) {
+		this.orderValue = orderValue;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [oid=" + oid + ", fkCid=" + fkCid + "]";
+		return "Order [customer=" + customer + ", itemList=" + itemList + ", orderValue=" + orderValue + ", oid=" + oid
+				+ "]";
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result + ((itemList == null) ? 0 : itemList.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
-		result = prime * result + ((fkCid == null) ? 0 : fkCid.hashCode());
+		result = prime * result + ((orderValue == null) ? 0 : orderValue.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -49,18 +77,27 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (getOid() == null) {
-			if (other.getOid() != null)
+		if (customer == null) {
+			if (other.customer != null)
 				return false;
-		} else if (!getOid().equals(other.getOid()))
+		} else if (!customer.equals(other.customer))
 			return false;
-		if (fkCid == null) {
-			if (other.fkCid != null)
+		if (itemList == null) {
+			if (other.itemList != null)
 				return false;
-		} else if (!fkCid.equals(other.fkCid))
+		} else if (!itemList.equals(other.itemList))
+			return false;
+		if (oid == null) {
+			if (other.oid != null)
+				return false;
+		} else if (!oid.equals(other.oid))
+			return false;
+		if (orderValue == null) {
+			if (other.orderValue != null)
+				return false;
+		} else if (!orderValue.equals(other.orderValue))
 			return false;
 		return true;
 	}
-	
 	
 }

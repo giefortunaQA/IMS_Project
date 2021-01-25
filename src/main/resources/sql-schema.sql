@@ -24,14 +24,14 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`oid` INT(10) NOT NULL AUTO_INCREMENT,
 	`fk_cid` INT(10) NOT NULL,
-	`date_placed` DATE NOT NULL,
+	`order_value` DOUBLE,
 	PRIMARY KEY (`oid`),
-	FOREIGN KEY (`fk_cid`) references customers(`cid`)
+	FOREIGN KEY (`fk_cid`) references customers(`cid`) ON UPDATE CASCADE ON DELETE CASCADE
 	);
 	
 CREATE TABLE IF NOT EXISTS `ims`.`orders_items` (
 	`fk_oid` INT(10) NOT NULL,
 	`fk_iid` INT(10) NOT NULL,
-	FOREIGN KEY (`fk_oid`) references orders(`oid`),
-	FOREIGN KEY (`fk_iid`) references items(`iid`)
+	FOREIGN KEY (`fk_oid`) references orders(`oid`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`fk_iid`) references items(`iid`) ON UPDATE CASCADE ON DELETE CASCADE
 	);

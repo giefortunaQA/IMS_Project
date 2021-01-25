@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
 
@@ -21,8 +20,8 @@ public class OrderDao implements IDomainDao<Order>{
 	public Order create(Order order) {
 	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("INSERT INTO orders (fk_cid) VALUES (?);")) {
-            statement.setLong(1, order.getFkCid());
+                        .prepareStatement("INSERT INTO orders (fk_cid) VALUES (?);")){
+            statement.setLong(1, order.getCustomer().getCid());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -30,6 +29,20 @@ public class OrderDao implements IDomainDao<Order>{
         	LOGGER.error(e.getMessage());
         }
         return null;
+	}
+
+	public Long addToOrder(Long oid,Long iid) {
+	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+	    		PreparedStatement statement = connection
+	    				.prepareStatement("INSERT INTO orders_items (fk_oid,fk_iid) VALUES (?,?);")){
+            statement.setLong(1, oid);
+            statement.setLong(2, iid);
+            statement.executeUpdate();
+        } catch (Exception e) {
+        	LOGGER.debug(e);
+        	LOGGER.error(e.getMessage());
+        }
+	    return null;
 	}
 	
     public Order readLatest() {

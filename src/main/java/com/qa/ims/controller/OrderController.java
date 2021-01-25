@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDao;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.JavaUtilities;
 
@@ -23,9 +24,26 @@ public class OrderController implements ICrudController<Order>{
     
 	@Override
 	public Order create() {
+//		boolean keepAdd=true;
+//        List<Long> itemList= new ArrayList<Long>();
         LOGGER.info("Please enter customer id");
         Long fkCid = javaUtilities.getLong();
-        Order order = orderDao.create(new Order(fkCid));
+        
+//        while (keepAdd) {
+//        	LOGGER.info("Please enter item id to order\n >> '0' to stop adding");
+//            Long fkIid=javaUtilities.getLong();
+//            if (fkIid!=0) {
+//            	itemList.add(fkIid);
+//            	LOGGER.info("Added!");
+//            } else {
+//            	keepAdd=false;
+//            	}
+//        }
+        
+        Order order = orderDao.create(new Order(new Customer(fkCid,null,null,null,null),null,0.0));
+//        for (Long iid: itemList) {
+//        	orderDao.addToOrder(order.getOid(), iid);
+//        }
         LOGGER.info("Order record created.");
         return order;
 	}
