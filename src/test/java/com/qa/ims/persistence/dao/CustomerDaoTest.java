@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.DatabaseUtilities;
 
-public class CustomerDAOTest {
+public class CustomerDaoTest {
 
     private final CustomerDao DAO = new CustomerDao();
 
