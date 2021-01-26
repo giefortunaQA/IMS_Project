@@ -21,11 +21,11 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer create(Customer customer) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("INSERT INTO customers(first_name, surname,house_number,postcode) VALUES (?, ?,?,?);")) {
+                        .prepareStatement("INSERT INTO customers(first_name, surname,house_number,postcode) VALUES (?,?,?,?)")) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
             statement.setLong(3, customer.getHouseNumber());
-            statement.setNString(4, customer.getPostCode());
+            statement.setString(4, customer.getPostCode());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class CustomerDao implements IDomainDao<Customer> {
 
     public Customer read(Long cid) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE cid = ?;")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE cid = ?")) {
             statement.setLong(1, cid);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
@@ -53,7 +53,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public List<Customer> readAll() {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers;")) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers");) {
             List<Customer> customers = new ArrayList<>();
             while (resultSet.next()) {
                 customers.add(modelFromResultSet(resultSet));
@@ -69,7 +69,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer readLatest() {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY cid DESC LIMIT 1;")) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY cid DESC LIMIT 1")) {
             resultSet.next();
             return modelFromResultSet(resultSet);
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer update(Customer customer) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?;")) {
+                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?")) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
             statement.setLong(3, customer.getHouseNumber());

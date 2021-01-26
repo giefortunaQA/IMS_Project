@@ -8,19 +8,22 @@ public class Customer {
 	private Long houseNumber;
 	private String postCode;
 
-	public Customer(String firstName, String surname,Long houseNumber,String postCode) {
-		this.setFirstName(firstName);
-		this.setSurname(surname);
-		this.setHouseNumber(houseNumber);
-		this.setPostCode(postCode);
+
+	public Customer(String firstName, String surname, Long houseNumber, String postCode) {
+		super();
+		this.firstName = firstName;
+		this.surname = surname;
+		this.houseNumber = houseNumber;
+		this.postCode = postCode;
 	}
 
-	public Customer(Long cid, String firstName, String surname,Long houseNumber,String postCode) {
-		this.setCid(cid);
-		this.setFirstName(firstName);
-		this.setSurname(surname);
-		this.setHouseNumber(houseNumber);
-		this.setPostCode(postCode);
+	public Customer(Long cid, String firstName, String surname, Long houseNumber, String postCode) {
+		super();
+		this.cid = cid;
+		this.firstName = firstName;
+		this.surname = surname;
+		this.houseNumber = houseNumber;
+		this.postCode = postCode;
 	}
 
 	public Long getCid() {
@@ -74,8 +77,10 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((cid == null) ? 0 : cid.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((houseNumber == null) ? 0 : houseNumber.hashCode());
+		result = prime * result + ((postCode == null) ? 0 : postCode.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
@@ -89,15 +94,25 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (getFirstName() == null) {
-			if (other.getFirstName() != null)
-				return false;
-		} else if (!getFirstName().equals(other.getFirstName()))
-			return false;
 		if (cid == null) {
 			if (other.cid != null)
 				return false;
 		} else if (!cid.equals(other.cid))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (houseNumber == null) {
+			if (other.houseNumber != null)
+				return false;
+		} else if (!houseNumber.equals(other.houseNumber))
+			return false;
+		if (postCode == null) {
+			if (other.postCode != null)
+				return false;
+		} else if (!postCode.equals(other.postCode))
 			return false;
 		if (surname == null) {
 			if (other.surname != null)
@@ -106,5 +121,7 @@ public class Customer {
 			return false;
 		return true;
 	}
+
+	
 
 }

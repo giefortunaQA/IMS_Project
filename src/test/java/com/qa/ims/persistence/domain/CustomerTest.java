@@ -4,14 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-//import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 
 public class CustomerTest {
 
-//	@Test
-//	public void testEquals() {
-//		EqualsVerifier.simple().forClass(Customer.class).verify();
-//	}
+	@Test
+	public void testEquals() {
+		EqualsVerifier.simple().forClass(Customer.class).verify();
+	}
 	
 	@Test
 	public void testConstruct1() {
@@ -31,7 +32,6 @@ public class CustomerTest {
 		assertEquals("Smith",customer.getSurname());
 		assertEquals(1L,customer.getHouseNumber().longValue());
 		assertEquals("AAA9 9AA",customer.getPostCode());
-		
 	}
 	
 	@Test
@@ -56,5 +56,5 @@ public class CustomerTest {
 		assertEquals(expected,customer.toString());
 	}
 	
-
+// 
 }
