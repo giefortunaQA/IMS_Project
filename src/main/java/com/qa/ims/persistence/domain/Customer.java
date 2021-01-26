@@ -11,16 +11,16 @@ public class Customer {
 	public Customer(String firstName, String surname,Long houseNumber,String postCode) {
 		this.setFirstName(firstName);
 		this.setSurname(surname);
-		this.houseNumber=houseNumber;
-		this.postCode=postCode;
+		this.setHouseNumber(houseNumber);
+		this.setPostCode(postCode);
 	}
 
 	public Customer(Long cid, String firstName, String surname,Long houseNumber,String postCode) {
 		this.setCid(cid);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
-		this.houseNumber=houseNumber;
-		this.postCode=postCode;
+		this.setHouseNumber(houseNumber);
+		this.setPostCode(postCode);
 	}
 
 	public Long getCid() {
