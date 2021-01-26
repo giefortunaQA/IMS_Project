@@ -5,6 +5,16 @@ public class Order {
 	private Long oid;
 	private Long fkCid;
 	private Double orderValue;
+	private Long iid;
+	
+	public Order(Long oid) {
+		this.oid=oid;
+	}
+	
+	public Order(Long oid,Long iid) {
+		this.oid=oid;
+		this.setIid(iid);
+	}
 	
 	public Order(Long fkCid, Double orderValue) {
 		super();
@@ -73,6 +83,14 @@ public class Order {
 		} else if (!orderValue.equals(other.orderValue))
 			return false;
 		return true;
+	}
+
+	public Long getIid() {
+		return iid;
+	}
+
+	public void setIid(Long iid) {
+		this.iid = iid;
 	}
 
 }

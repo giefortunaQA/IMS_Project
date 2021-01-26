@@ -6,6 +6,13 @@ public class Item {
 	private Long qty;
 	private Double price;
 	
+	public Item(Long iid, String name, Double price) {
+		super();
+		this.iid = iid;
+		this.name = name;
+		this.price = price;
+	}
+
 	public Item(Long iid, String name, Long qty, double price) {
 		this.iid=iid;
 		this.name=name;

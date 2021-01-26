@@ -11,6 +11,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mysql.cj.protocol.Resultset;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
 
@@ -33,19 +35,6 @@ public class OrderDao implements IDomainDao<Order>{
         return null;
 	}
 
-	public Long addToOrder(Long oid,Long iid) {
-	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-	    		PreparedStatement statement = connection
-	    				.prepareStatement("INSERT INTO orders_items (fk_oid,fk_iid) VALUES (?,?);")){
-            statement.setLong(1, oid);
-            statement.setLong(2, iid);
-            statement.executeUpdate();
-        } catch (Exception e) {
-        	LOGGER.debug(e);
-        	LOGGER.error(e.getMessage());
-        }
-	    return null;
-	}
 	
     public Order readLatest() {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
@@ -76,12 +65,83 @@ public class OrderDao implements IDomainDao<Order>{
         }
         return new ArrayList<>();
 	}
-
+	public List<Item> readItems(Order order) {
+	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT oi.fk_iid,i.name,i.price FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=?;")){
+	    	List<Item> items= new ArrayList<>();
+            statement.setLong(1, order.getOid());
+            ResultSet resultSet=statement.executeQuery();
+            while (resultSet.next()) {
+            	Long iid= resultSet.getLong("fk_iid");
+            	String name= resultSet.getString("name");
+            	Double price=resultSet.getDouble("price");
+            	items.add(new Item(iid,name,price));
+            }
+            return items;
+        } catch (Exception e) {
+        	LOGGER.debug(e);
+        	LOGGER.error(e.getMessage());
+        }
+        return new ArrayList<>();
+	}
+	public Order read(Long oid) {
+	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+	               PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE oid = ?");) {
+	           statement.setLong(1, oid);
+	           ResultSet resultSet = statement.executeQuery();
+	           resultSet.next();
+	           return modelFromResultSet(resultSet);
+	     } catch (Exception e) {
+	            LOGGER.debug(e);
+	            LOGGER.error(e.getMessage());
+	        }
+	        return null;
+	    }
 	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
+	public Order update(Order order) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("UPDATE orders SET fk_cid=? WHERE oid = ?;")) {
+            statement.setLong(1, order.getFkCid());
+            statement.setLong(2, order.getOid());
+            statement.executeUpdate();
+            return read(order.getOid());
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
 		return null;
 	}
+	
+	public void updateAdd(Order order) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO orders_items (fk_oid,fk_iid) VALUES (?,?);")) {
+            statement.setLong(1, order.getOid());
+            statement.setDouble(2, order.getIid());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+	}
+	
+	public void updateDelete(Order order) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("DELETE from orders_items WHERE oid= ? AND iid=? LIMIT 1")) {
+            statement.setLong(1, order.getOid());
+            statement.setDouble(2, order.getIid());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+	}
+	
+
+	
 
 	@Override
 	public int delete(long id) {
@@ -96,6 +156,5 @@ public class OrderDao implements IDomainDao<Order>{
 		Double orderValue = resultSet.getDouble("order_value");
 		return new Order(oid,fkCid,orderValue);
 	}
-
 
 }
