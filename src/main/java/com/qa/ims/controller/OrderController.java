@@ -116,8 +116,10 @@ public class OrderController implements ICrudController<Order>{
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		  LOGGER.info("Please enter the id of the order you would like to delete");
+	        Long oid = javaUtilities.getLong();
+	        LOGGER.info("Order deleted.");
+	        return orderDao.delete(oid);
 	}
 	
 

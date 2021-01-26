@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mysql.cj.protocol.Resultset;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DatabaseUtilities;
@@ -144,9 +143,15 @@ public class OrderDao implements IDomainDao<Order>{
 	
 
 	@Override
-	public int delete(long id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(long oid) {
+		 try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+	                Statement statement = connection.createStatement();) {
+	            return statement.executeUpdate("delete from orders where oid = " + oid+";");
+	        } catch (Exception e) {
+	            LOGGER.debug(e);
+	            LOGGER.error(e.getMessage());
+	        }
+	        return 0;
 	}
 
 	@Override
@@ -155,6 +160,20 @@ public class OrderDao implements IDomainDao<Order>{
 		Long fkCid= resultSet.getLong("fk_cid");
 		Double orderValue = resultSet.getDouble("order_value");
 		return new Order(oid,fkCid,orderValue);
+	}
+	
+	public ResultSet setValue(Order order) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT SUM(i.price) FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=?;")) {
+            statement.setLong(1, order.getOid());
+            ResultSet result=statement.executeQuery();
+            return result;
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+		return null;
 	}
 
 }
