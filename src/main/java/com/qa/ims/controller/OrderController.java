@@ -45,6 +45,7 @@ public class OrderController implements ICrudController<Order>{
         for (Long iid: itemList) {
         	orderDao.updateAdd(new Order(order.getOid(),iid));
         }
+        orderDao.setValue(orderDao.getValue(order));
         LOGGER.info("Order record created.");
         return order;
 	}
@@ -67,6 +68,7 @@ public class OrderController implements ICrudController<Order>{
 			LOGGER.info("Please enter order id");
 			Long oid=javaUtilities.getLong();
 			List<Item> items= orderDao.readItems(new Order(oid));
+			LOGGER.info(orderDao.read(oid));
 			for (Item item:items) {
 				LOGGER.info(item);
 			}
@@ -94,22 +96,25 @@ public class OrderController implements ICrudController<Order>{
 	        Long fkCid=javaUtilities.getLong();
 	        order= orderDao.update(new Order(oid,fkCid,0.0));
 	        LOGGER.info("Customer id updated.");
-	        break;
+	        return order;
 	        
 	        case ("2"): LOGGER.info("Please enter iid of item you would like to add");
         	Long iid=javaUtilities.getLong();
-        	orderDao.updateAdd(new Order(oid,iid));
+        	order=new Order(oid,iid);
+        	orderDao.updateAdd(order);
         	LOGGER.info("Item added.");
-        	break;
+        	return order;
         	
 	        case ("3"): LOGGER.info("Please enter iid of item you would like to delete");
         	Long iid1 =javaUtilities.getLong();
-        	orderDao.updateDelete(new Order(oid,iid1));
+        	order=new Order(oid,iid1);
+        	orderDao.updateDelete(order);
         	LOGGER.info("Item deleted.");
-        	break;
+        	return order;
         	
 	        default: LOGGER.info("Invalid input. Choose update to try again.'");
 	        }
+	        orderDao.setValue(orderDao.getValue(order));
 			return order;
 	     
 	}

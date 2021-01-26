@@ -21,10 +21,9 @@ public class ItemDao implements IDomainDao<Item>{
     public Item create(Item item) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("INSERT INTO items(name,qty,price) VALUES (?, ?,?);")) {
+                        .prepareStatement("INSERT INTO items(name,price) VALUES (?,?);")) {
             statement.setString(1, item.getName());
-            statement.setLong(2, item.getQty());
-            statement.setDouble(3, item.getPrice());
+            statement.setDouble(2, item.getPrice());
             statement.executeUpdate();
             return readLatest();
         } catch (Exception e) {
@@ -82,11 +81,10 @@ public class ItemDao implements IDomainDao<Item>{
     public Item update(Item item) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE items SET name=?, qty=?, price=? WHERE iid = ?;")) {
+                        .prepareStatement("UPDATE items SET name=?, price=? WHERE iid = ?;")) {
             statement.setString(1, item.getName());
-            statement.setLong(2, item.getQty());
-            statement.setDouble(3, item.getPrice());
-            statement.setLong(4, item.getIid());
+            statement.setDouble(2, item.getPrice());
+            statement.setLong(3, item.getIid());
             statement.executeUpdate();
             return read(item.getIid());
         } catch (Exception e) {
@@ -112,9 +110,8 @@ public class ItemDao implements IDomainDao<Item>{
 	 public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		 Long iid = resultSet.getLong("iid");
 		 String name = resultSet.getString("name");
-		 Long qty = resultSet.getLong("qty");
 		 double price=resultSet.getDouble("price");
-		 return new Item(iid, name, qty,price);
+		 return new Item(iid, name,price);
 	    }
 
 }

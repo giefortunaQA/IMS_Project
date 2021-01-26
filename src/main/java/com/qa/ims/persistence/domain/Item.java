@@ -3,7 +3,6 @@ package com.qa.ims.persistence.domain;
 public class Item {
 	private Long iid;
 	private String name;
-	private Long qty;
 	private Double price;
 	
 	public Item(Long iid, String name, Double price) {
@@ -13,16 +12,9 @@ public class Item {
 		this.price = price;
 	}
 
-	public Item(Long iid, String name, Long qty, double price) {
-		this.iid=iid;
+
+	public Item( String name, double price) {
 		this.name=name;
-		this.qty=qty;
-		this.price=price;
-	}
-	
-	public Item( String name, Long qty, double price) {
-		this.name=name;
-		this.qty=qty;
 		this.price=price;
 	}
 
@@ -42,13 +34,6 @@ public class Item {
 		this.name = name;
 	}
 
-	public Long getQty() {
-		return qty;
-	}
-
-	public void setQty(Long qty) {
-		this.qty = qty;
-	}
 
 	public double getPrice() {
 		return price;
@@ -60,7 +45,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [iid=" + iid + ", name=" + name + ", qty=" + qty + ", price=" + price + "]";
+		return "Item [iid=" + iid + ", name=" + name + ", price=" + price + "]";
 	}
 	
 	@Override
@@ -69,7 +54,6 @@ public class Item {
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((iid == null) ? 0 : iid.hashCode());
-		result = prime * result + ((qty == null) ? 0 : qty.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
 	}
@@ -92,11 +76,6 @@ public class Item {
 			if (other.iid != null)
 				return false;
 		} else if (!iid.equals(other.iid))
-			return false;
-		if (qty == null) {
-			if (other.qty != null)
-				return false;
-		} else if (!qty.equals(other.qty))
 			return false;
 		if (price == null) {
 			if (other.price != null)

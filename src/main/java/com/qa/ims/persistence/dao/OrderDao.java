@@ -162,18 +162,34 @@ public class OrderDao implements IDomainDao<Order>{
 		return new Order(oid,fkCid,orderValue);
 	}
 	
-	public ResultSet setValue(Order order) {
+	public Order getValue(Order order) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT SUM(i.price) FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=?;")) {
+                        .prepareStatement("SELECT oi.fk_oid,SUM(i.price) AS total FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=?;")) {
             statement.setLong(1, order.getOid());
             ResultSet result=statement.executeQuery();
-            return result;
+            while (result.next()) {
+            	Long oid=result.getLong("fk_oid");
+            	Double orderValue=result.getDouble("total");
+            	return new Order(oid,null,orderValue);}
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
 		return null;
+	}
+	
+	public void setValue(Order order) {
+		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("UPDATE orders SET order_value=? where oid=?;")) {
+            statement.setDouble(1, order.getOrderValue());
+            statement.setLong(2, order.getOid());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
 	}
 
 }
