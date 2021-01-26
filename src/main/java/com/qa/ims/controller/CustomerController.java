@@ -22,15 +22,6 @@ public class CustomerController implements ICrudController<Customer> {
     }
 
     @Override
-    public List<Customer> readAll() {
-        List<Customer> customers = customerDao.readAll();
-        for (Customer customer : customers) {
-            LOGGER.info(customer);
-        }
-        return customers;
-    }
-
-    @Override
     public Customer create() {
         LOGGER.info("Please enter a first name");
         String firstName = javaUtilities.getString();
@@ -43,6 +34,15 @@ public class CustomerController implements ICrudController<Customer> {
         Customer customer = customerDao.create(new Customer(firstName, surname,houseNumber,postCode));
         LOGGER.info("Customer created");
         return customer;
+    }
+
+    @Override
+    public List<Customer> readAll() {
+        List<Customer> customers = customerDao.readAll();
+        for (Customer customer : customers) {
+            LOGGER.info(customer);
+        }
+        return customers;
     }
 
     @Override

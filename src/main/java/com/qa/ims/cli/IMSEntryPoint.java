@@ -25,10 +25,10 @@ public class IMSEntryPoint {
     public IMSEntryPoint() {
         this.javaUtilities = new JavaUtilities();
         final CustomerDao custDAO = new CustomerDao();
-        this.customers = new CustomerController(custDAO, javaUtilities);
         final ItemDao itemDAO=new ItemDao();
-        this.items=new ItemController(itemDAO, javaUtilities);
         final OrderDao orderDAO=new OrderDao();
+        this.customers = new CustomerController(custDAO, javaUtilities);
+        this.items=new ItemController(itemDAO, javaUtilities);
         this.orders=new OrderController(orderDAO,javaUtilities);
     }
 
