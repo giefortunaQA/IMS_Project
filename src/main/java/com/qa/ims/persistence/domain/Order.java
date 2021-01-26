@@ -49,15 +49,26 @@ public class Order {
 	public String toString() {
 		return "Order [oid=" + oid + ", fkCid=" + fkCid + ", orderValue=" + orderValue + "]";
 	}
+
+	public Long getIid() {
+		return iid;
+	}
+
+	public void setIid(Long iid) {
+		this.iid = iid;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((fkCid == null) ? 0 : fkCid.hashCode());
+		result = prime * result + ((iid == null) ? 0 : iid.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
 		result = prime * result + ((orderValue == null) ? 0 : orderValue.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -72,6 +83,11 @@ public class Order {
 				return false;
 		} else if (!fkCid.equals(other.fkCid))
 			return false;
+		if (iid == null) {
+			if (other.iid != null)
+				return false;
+		} else if (!iid.equals(other.iid))
+			return false;
 		if (oid == null) {
 			if (other.oid != null)
 				return false;
@@ -85,12 +101,5 @@ public class Order {
 		return true;
 	}
 
-	public Long getIid() {
-		return iid;
-	}
-
-	public void setIid(Long iid) {
-		this.iid = iid;
-	}
 
 }

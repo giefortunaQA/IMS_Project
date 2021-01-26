@@ -40,12 +40,10 @@ public class OrderController implements ICrudController<Order>{
             	keepAdd=false;
             	}
         }
-        
         Order order = orderDao.create(new Order(fkCid,0.0));
         for (Long iid: itemList) {
         	orderDao.updateAdd(new Order(order.getOid(),iid));
         }
-        orderDao.setValue(orderDao.getValue(order));
         LOGGER.info("Order record created.");
         return order;
 	}
@@ -114,7 +112,6 @@ public class OrderController implements ICrudController<Order>{
         	
 	        default: LOGGER.info("Invalid input. Choose update to try again.'");
 	        }
-	        orderDao.setValue(orderDao.getValue(order));
 			return order;
 	     
 	}

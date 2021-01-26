@@ -103,7 +103,7 @@ public class OrderDao implements IDomainDao<Order>{
                 PreparedStatement statement = connection
                         .prepareStatement("UPDATE orders SET fk_cid=? WHERE oid = ?;")) {
             statement.setLong(1, order.getFkCid());
-            statement.setLong(2, order.getOid());
+            statement.setLong(2, order.getOid()); 
             statement.executeUpdate();
             return read(order.getOid());
         } catch (Exception e) {
@@ -120,6 +120,7 @@ public class OrderDao implements IDomainDao<Order>{
             statement.setLong(1, order.getOid());
             statement.setDouble(2, order.getIid());
             statement.executeUpdate();
+            setValue(getValue(read(order.getOid())));
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
@@ -129,10 +130,11 @@ public class OrderDao implements IDomainDao<Order>{
 	public void updateDelete(Order order) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("DELETE from orders_items WHERE oid= ? AND iid=? LIMIT 1")) {
+                        .prepareStatement("DELETE from orders_items WHERE fk_oid= ? AND fk_iid=? LIMIT 1")) {
             statement.setLong(1, order.getOid());
             statement.setDouble(2, order.getIid());
             statement.executeUpdate();
+            setValue(getValue(read(order.getOid())));
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
@@ -165,7 +167,7 @@ public class OrderDao implements IDomainDao<Order>{
 	public Order getValue(Order order) {
 		try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT oi.fk_oid,SUM(i.price) AS total FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=?;")) {
+                        .prepareStatement("SELECT oi.fk_oid,SUM(i.price) AS total FROM orders_items oi JOIN items i ON i.iid=oi.fk_iid WHERE oi.fk_oid=? GROUP by oi.fk_oid;")) {
             statement.setLong(1, order.getOid());
             ResultSet result=statement.executeQuery();
             while (result.next()) {
