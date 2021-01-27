@@ -26,7 +26,7 @@ public class OrderController implements ICrudController<Order>{
 	@Override
 	public Order create() {
 		boolean keepAdd=true;
-        List<Long> itemList= new ArrayList<Long>();
+        List<Long> itemList= new ArrayList<>();
         LOGGER.info("Please enter customer id");
         Long fkCid = javaUtilities.getLong();
         

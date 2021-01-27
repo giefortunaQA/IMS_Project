@@ -55,8 +55,8 @@
             </activation>
             <properties>
                 <sonar.host.url>http://localhost:9000</sonar.host.url>
-                <sonar.user>admin</sonar.user>
-                <sonar.password>admin</sonar.password>
+                <sonar.login>admin</sonar.login>
+                <sonar.password>G09fog090398.</sonar.password>
             </properties>
         </profile>
     </profiles>
