@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface ICrudController<T> {
 
-	List<T> readAll();
-
 	T create();
+	
+	List<T> readAll();
 
 	T update();
 

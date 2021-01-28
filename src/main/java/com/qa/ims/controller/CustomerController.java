@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.qa.ims.persistence.dao.CustomerDao;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.JavaUtilities;
@@ -23,6 +22,21 @@ public class CustomerController implements ICrudController<Customer> {
     }
 
     @Override
+    public Customer create() {
+        LOGGER.info("Please enter a first name");
+        String firstName = javaUtilities.getString();
+        LOGGER.info("Please enter a surname");
+        String surname = javaUtilities.getString();
+        LOGGER.info("Please enter a house number");
+        Long houseNumber=javaUtilities.getLong();
+        LOGGER.info("Please enter a postcode (AAA9 9AA format) ");
+        String postCode=javaUtilities.getString();
+        Customer customer = customerDao.create(new Customer(firstName, surname,houseNumber,postCode));
+        LOGGER.info("Customer created");
+        return customer;
+    }
+
+    @Override
     public List<Customer> readAll() {
         List<Customer> customers = customerDao.readAll();
         for (Customer customer : customers) {
@@ -32,27 +46,21 @@ public class CustomerController implements ICrudController<Customer> {
     }
 
     @Override
-    public Customer create() {
-        LOGGER.info("Please enter a first name");
-        String firstName = javaUtilities.getString();
-        LOGGER.info("Please enter a surname");
-        String surname = javaUtilities.getString();
-        Customer customer = customerDao.create(new Customer(firstName, surname));
-        LOGGER.info("Customer created");
-        return customer;
-    }
-
-    @Override
     public Customer update() {
-        LOGGER.info("Please enter the id of the customer you would like to update");
-        Long id = javaUtilities.getLong();
+        LOGGER.info("Please enter the cid of the customer you would like to update");
+        Long cid = javaUtilities.getLong();
         LOGGER.info("Please enter a first name");
         String firstName = javaUtilities.getString();
         LOGGER.info("Please enter a surname");
         String surname = javaUtilities.getString();
-        Customer customer = customerDao.update(new Customer(id, firstName, surname));
+        LOGGER.info("Please enter a house number");
+        Long houseNumber=javaUtilities.getLong();
+        LOGGER.info("Please enter a postcode (AAA9 9AA format) ");
+        String postCode=javaUtilities.getString();
+        Customer customer = customerDao.update(new Customer(cid,firstName, surname,houseNumber,postCode));
         LOGGER.info("Customer Updated");
         return customer;
+    	
     }
 
     @Override

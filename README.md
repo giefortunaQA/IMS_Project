@@ -1,68 +1,77 @@
-Coverage: 34%
-# Project Title
+Coverage: 56.3% (Sonarqube)
+## INVENTORY MANAGEMENT SYSTEM PROJECT
 
-One Paragraph of project description goes here
+This application is created using Java and an embedded h2 database (MySQL). Running this program enables the user to perform tasks such as creating, reading, updating and deleting a record in the database.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Firstly, make sure you have the following programs installed and ideally, Java and Maven are both added to your Path.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Git bash - to clone this repo
+Java 11 - to run the program
+Maven  - to run the unit tests
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
-
-### Unit Tests 
-
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+Clone this repository to your local device. 
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+In the target folder, there is a "ims-0.0.1-jar-with-dependencies.jar" file which is executable from your command line. 
+Before doing anything, make sure you have the right version of Java by running in your command line:
+```
+java -version
+```
+
+Then, change your directory to your local git repository and in the target directory:
+```
+cd ..\20DecSDET2-IMS-Starter\target
+```
+
+To execute the .jar file, run:
+```
+java -jar ims-0.0.1-jar-with-dependencies.jar
+```
+
+Alternaltively, this package can be opened with Eclipse.
+
+## Running the tests
+
+To run the JUnit tests in this Maven package, simply change the directory to ..\20DecSDET2-IMS-Starter and execute
+```
+mvn test
+```
+
+### Unit Tests 
+
+These tests confirm that each method returns the correct/expected value using assertions like assertEquals() statements. 
+
+```
+Example:
+//Method in OrderDao
+@Override
+	public Order create(Order order) {
+	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO orders (fk_cid) VALUES (?);")){
+            statement.setLong(1, order.getFkCid());
+            statement.executeUpdate();
+            return readLatest();
+        } catch (Exception e) {
+        	LOGGER.debug(e);
+        	LOGGER.error(e.getMessage());
+        }
+        return null;
+	}
+//Test Method in OrderDaoTest
+	 @Test
+	    public void testCreate() {
+		 final Order order=new Order(2L, 1L,0.0);
+		 assertEquals(order,DAO.create(order));
+	    }
+```
 
 ## Built With
 

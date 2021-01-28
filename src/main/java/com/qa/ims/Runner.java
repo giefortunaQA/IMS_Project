@@ -14,6 +14,9 @@ public class Runner {
         IMSEntryPoint ims = new IMSEntryPoint();
         ims.init();
         LOGGER.info("Exited the Inventory Management System.");
+    	
     }
+    
+
 
 }

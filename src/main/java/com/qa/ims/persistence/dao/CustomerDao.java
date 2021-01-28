@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.DatabaseUtilities;
 
@@ -22,26 +21,29 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer create(Customer customer) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
+                        .prepareStatement("INSERT INTO customers(first_name, surname,house_number,postcode) VALUES (?,?,?,?)")) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
+            statement.setLong(3, customer.getHouseNumber());
+            statement.setString(4, customer.getPostCode());
             statement.executeUpdate();
             return readLatest();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
         return null;
     }
 
-    public Customer read(Long id) {
+    public Customer read(Long cid) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE id = ?");) {
-            statement.setLong(1, id);
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE cid = ?")) {
+            statement.setLong(1, cid);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             return modelFromResultSet(resultSet);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
@@ -68,7 +70,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer readLatest() {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY cid DESC LIMIT 1")) {
             resultSet.next();
             return modelFromResultSet(resultSet);
         } catch (Exception e) {
@@ -82,24 +84,26 @@ public class CustomerDao implements IDomainDao<Customer> {
     public Customer update(Customer customer) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+                        .prepareStatement("UPDATE customers SET first_name = ?, surname = ?, house_number=?, postcode=? WHERE cid = ?")) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getSurname());
-            statement.setLong(3, customer.getId());
+            statement.setLong(3, customer.getHouseNumber());
+            statement.setNString(4, customer.getPostCode());
+            statement.setLong(5, customer.getCid());
             statement.executeUpdate();
-            return read(customer.getId());
+            return readLatest();
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
-        return null;
+		return null;
     }
 
     @Override
-    public int delete(long id) {
+    public int delete(long cid) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();) {
-            return statement.executeUpdate("delete from customers where id = " + id);
+            return statement.executeUpdate(String.format("DELETE FROM customers WHERE cid=%d" , cid));
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
@@ -109,10 +113,12 @@ public class CustomerDao implements IDomainDao<Customer> {
 
     @Override
     public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
+        Long cid = resultSet.getLong("cid");
         String firstName = resultSet.getString("first_name");
         String surname = resultSet.getString("surname");
-        return new Customer(id, firstName, surname);
+        Long houseNumber=resultSet.getLong("house_number");
+        String postCode=resultSet.getNString("postcode");
+        return new Customer(cid, firstName, surname,houseNumber,postCode);
     }
 
 }
