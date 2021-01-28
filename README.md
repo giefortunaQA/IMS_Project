@@ -1,19 +1,21 @@
 Coverage: 56.3%
 Inventory Management System Project
 
-This application is a system created using the Java programming language and an embedded h2 plugin to connect with a MySQL database. A user would interact with the console to manage the inventory.
+This application is created using Java and an embedded h2 database (MySQL). Running this program enables the user to perform tasks such as creating, reading, updating and deleting a record in the database.
 
 ## Getting Started
 
-Clone this repository as a local git repository. 
+Firstly, make sure you have the following programs installed and ideally, Java and Maven are both added to your Path.
 
 ### Prerequisites
 
 Git bash - to clone this repo
-Java 11
-Maven 
+Java 11 - to run the program
+Maven  - to run the unit tests
 
 ### Installing
+
+Clone this repository to your local device. 
 
 
 ## Running the tests
@@ -72,11 +74,13 @@ In the target folder, there is a "ims-0.0.1-jar-with-dependencies.jar" file whic
 Before doing anything, make sure you have the right version of Java by running in your command line:
     java -version
 
-Open your command prompt and change your directory to the local git repository:
+Then, change your directory to your local git repository and in the target directory:
     cd ..\20DecSDET2-IMS-Starter\target
   
 To execute the .jar file, run:
   java -jar ims-0.0.1-jar-with-dependencies.jar
+  
+Alternaltively, this package can be opened with Eclipse.
 
 ## Built With
 
