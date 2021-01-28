@@ -19,14 +19,14 @@ public class ItemTest {
 		final Item item=new Item(1L,"bar stool",49.99);
 		assertEquals(1L, item.getIid().longValue());
 		assertEquals("bar stool",item.getName());
-		assertTrue(49.99==item.getPrice());
+		assertEquals(49.99,item.getPrice(),0.001);
 	}
 	
 	@Test
 	public void testConstruct2() {
 		final Item item=new Item("bar stool",49.99);
 		assertEquals("bar stool",item.getName());
-		assertTrue(49.99==item.getPrice());
+		assertEquals(49.99,item.getPrice(),0.001);
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class ItemTest {
 		item.setPrice(49.99);
 		assertEquals(1L, item.getIid().longValue());
 		assertEquals("bar stool",item.getName());
-		assertTrue(49.99==item.getPrice());
+		assertEquals(49.99,item.getPrice(),0.001);
 	}
 	
 	
