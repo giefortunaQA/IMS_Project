@@ -1,49 +1,55 @@
-Coverage: 34%
-# Project Title
+Coverage: 56.3%
+Inventory Management System Project
 
-One Paragraph of project description goes here
+This application is a system created using the Java programming language and an embedded h2 plugin to connect with a MySQL database. A user would interact with the console to manage the inventory.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Clone this repository as a local git repository. 
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Git bash - to clone this repo
+Java 11
+Maven 
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+To run the JUnit tests in this Maven package, simply change the directory to ..\20DecSDET2-IMS-Starter and execute
+    mvn test
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+These tests confirm that each method returns the correct/expected value using assertions like assertEquals() statements. 
 
 ```
-Give an example
+Example:
+//Method in OrderDao
+@Override
+	public Order create(Order order) {
+	    try (Connection connection = DatabaseUtilities.getInstance().getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO orders (fk_cid) VALUES (?);")){
+            statement.setLong(1, order.getFkCid());
+            statement.executeUpdate();
+            return readLatest();
+        } catch (Exception e) {
+        	LOGGER.debug(e);
+        	LOGGER.error(e.getMessage());
+        }
+        return null;
+	}
+//Test Method in OrderDaoTest
+	 @Test
+	    public void testCreate() {
+		 final Order order=new Order(2L, 1L,0.0);
+		 assertEquals(order,DAO.create(order));
+	    }
 ```
+
 
 ### Integration Tests 
 Explain what these tests test, why and how to run them
@@ -62,7 +68,15 @@ Give an example
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+In the target folder, there is a "ims-0.0.1-jar-with-dependencies.jar" file which is executable from your command line. 
+Before doing anything, make sure you have the right version of Java by running in your command line:
+    java -version
+
+Open your command prompt and change your directory to the local git repository:
+    cd ..\20DecSDET2-IMS-Starter\target
+  
+To execute the .jar file, run:
+  java -jar ims-0.0.1-jar-with-dependencies.jar
 
 ## Built With
 
