@@ -1,5 +1,5 @@
 Coverage: 56.3% (Sonarqube)
-###Inventory Management System Project
+## INVENTORY MANAGEMENT SYSTEM PROJECT
 
 This application is created using Java and an embedded h2 database (MySQL). Running this program enables the user to perform tasks such as creating, reading, updating and deleting a record in the database.
 
