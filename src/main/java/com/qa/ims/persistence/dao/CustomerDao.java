@@ -28,7 +28,8 @@ public class CustomerDao implements IDomainDao<Customer> {
             statement.setString(4, customer.getPostCode());
             statement.executeUpdate();
             return readLatest();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }

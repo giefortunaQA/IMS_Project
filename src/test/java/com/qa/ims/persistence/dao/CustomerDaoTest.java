@@ -1,7 +1,6 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class CustomerDaoTest {
         final Customer created = new Customer(2L,"John","Smith",1L,"AAA9 9AA");
         assertEquals(created, DAO.create(created));
     }
-
+    
     @Test
     public void testReadAll() {
         List<Customer> expected = new ArrayList<>();
