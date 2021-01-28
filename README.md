@@ -9,13 +9,17 @@ Firstly, make sure you have the following programs installed and ideally, Java a
 
 ### Prerequisites
 
-Git bash - to clone this repo
-Java 11 - to run the program
-Maven  - to run the unit tests
+Git bash - to clone this repo <br />
+Java 11 - to run the program <br />
+Maven  - to run the unit tests 
 
 ### Installing
 
-Clone this repository to your local device. 
+Clone this repository to your local device. In Git bash:
+
+```
+git clone https://github.com/giefortunaQA/20DecSDET2-IMS-Starter.git
+```
 
 ## Deployment
 
@@ -25,17 +29,17 @@ Before doing anything, make sure you have the right version of Java by running i
 java -version
 ```
 
-Then, change your directory to your local git repository and in the target directory:
+Then, change the directory to your local git repository and in the target directory:
 ```
 cd ..\20DecSDET2-IMS-Starter\target
 ```
 
-To execute the .jar file, run:
+To start the application, execute the .jar file:
 ```
 java -jar ims-0.0.1-jar-with-dependencies.jar
 ```
 
-Alternaltively, this package can be opened with Eclipse.
+Alternaltively, this package can be opened with Eclipse. Simply run the Runner.java file in src/main/java/com/qa/ims to start the application.
 
 ## Running the tests
 
@@ -66,7 +70,7 @@ Example:
         return null;
 	}
 //Test Method in OrderDaoTest
-	 @Test
+	@Test
 	    public void testCreate() {
 		 final Order order=new Order(2L, 1L,0.0);
 		 assertEquals(order,DAO.create(order));
