@@ -43,7 +43,7 @@ public class CustomerDao implements IDomainDao<Customer> {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             return modelFromResultSet(resultSet);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
