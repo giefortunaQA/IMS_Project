@@ -84,8 +84,8 @@ public class OrderController implements ICrudController<Order>{
 	        Long oid = javaUtilities.getLong();
 	        LOGGER.info("What would you like to do in UPDATE"
 	        		+ "\n -> (1) Change customer id "
-	        		+ "\n -> (2) Add"
-	        		+ "\n -> (3) Delete");
+	        		+ "\n -> (2) Add item to order"
+	        		+ "\n -> (3) Delete item from order");
 	        String choice=javaUtilities.getString();
 	        Order order = null;
 	        switch (choice) {

@@ -91,7 +91,7 @@ public class CustomerDao implements IDomainDao<Customer> {
             statement.setNString(4, customer.getPostCode());
             statement.setLong(5, customer.getCid());
             statement.executeUpdate();
-            return read(customer.getCid());
+            return readLatest();
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
