@@ -103,7 +103,7 @@ public class CustomerDao implements IDomainDao<Customer> {
     public int delete(long cid) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();) {
-            return statement.executeUpdate("delete from customers where cid = " + cid);
+            return statement.executeUpdate(String.format("DELETE FROM customers WHERE cid=%d" , cid));
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());

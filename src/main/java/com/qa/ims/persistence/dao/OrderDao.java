@@ -135,7 +135,7 @@ public class OrderDao implements IDomainDao<Order>{
             statement.setDouble(2, order.getIid());
             statement.executeUpdate();
             setValue(getValue(read(order.getOid())));
-        } catch (Exception e) {
+        }	catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
         }
@@ -148,7 +148,7 @@ public class OrderDao implements IDomainDao<Order>{
 	public int delete(long oid) {
 		 try (Connection connection = DatabaseUtilities.getInstance().getConnection();
 	                Statement statement = connection.createStatement();) {
-	            return statement.executeUpdate("delete from orders where oid = " + oid+";");
+	            return statement.executeUpdate(String.format("DELETE FROM orders WHERE oid=%d",oid));
 	        } catch (Exception e) {
 	            LOGGER.debug(e);
 	            LOGGER.error(e.getMessage());

@@ -98,7 +98,7 @@ public class ItemDao implements IDomainDao<Item>{
     public int delete(long iid) {
         try (Connection connection = DatabaseUtilities.getInstance().getConnection();
                 Statement statement = connection.createStatement();) {
-            return statement.executeUpdate("delete from items where iid = " + iid);
+            return statement.executeUpdate(String.format("DELETE FROM items WHERE iid=%d", iid));
         } catch (Exception e) {
             LOGGER.debug(e);
             LOGGER.error(e.getMessage());
