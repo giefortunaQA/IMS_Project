@@ -1,6 +1,7 @@
 .settings/
 target/
 bin/
+!target/ims-0.0.1-jar-with-dependencies.jar
 .*
 !.gitignore
 *.log
