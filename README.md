@@ -11,7 +11,8 @@ Firstly, make sure you have the following programs installed and ideally, Java a
 
 Git bash - to clone this repo <br />
 Java 11 - to run the program <br />
-Maven  - to run the unit tests 
+Maven  - to run the unit tests <br />
+MySQL
 
 ### Installing
 
@@ -97,6 +98,5 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Hat tip to Nick and Pawel, our trainers
+* Inspiration to my team, Team Serpent 
