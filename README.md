@@ -23,7 +23,7 @@ git clone https://github.com/giefortunaQA/20DecSDET2-IMS-Starter.git
 
 ## Deployment
 
-In the target folder, there is a "ims-0.0.1-jar-with-dependencies.jar" file which is executable from your command line. 
+There is a "ims-0.0.1-jar-with-dependencies.jar" file which is executable from your command line. 
 Before doing anything, make sure you have the right version of Java by running in your command line:
 ```
 java -version
