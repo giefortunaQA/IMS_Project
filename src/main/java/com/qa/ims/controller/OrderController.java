@@ -88,6 +88,7 @@ public class OrderController implements ICrudController<Order>{
 	        		+ "\n -> (3) Delete item from order");
 	        String choice=javaUtilities.getString();
 	        Order order = null;
+	        
 	        switch (choice) {
 	        
 	        case ("1"): LOGGER.info("Please enter new customer id");
