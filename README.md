@@ -40,6 +40,8 @@ To start the application, execute the .jar file:
 java -jar ims-0.0.1-jar-with-dependencies.jar
 ```
 
+The above can also be ran without cloning the whole repository. Simply download the .jar file and run the same line, given you're in the directory where file is downloaded to.
+
 Alternaltively, this package can be opened with Eclipse. Simply run the Runner.java file in src/main/java/com/qa/ims to start the application.
 
 ## Running the tests
